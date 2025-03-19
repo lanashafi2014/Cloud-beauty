@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your shopping cart at Cloud Beauty">
+  <title>Shopping Cart - Cloud Beauty</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Adding Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      <img src="logo.jpeg" alt="Cloud Beauty Logo">
+      <h1>Cloud Beauty</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+		<li><a href="beauty-tips.html">Beauty Tips</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="cart-page">
+    <div class="cart-container">
+      <h2>Your Shopping Cart</h2>
+      <div id="cart-items">
+        <!-- Cart items will be dynamically inserted here -->
+      </div>
+      
+      <div id="cart-summary" class="cart-summary">
+        <!-- Summary will be dynamically inserted here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Cloud Beauty. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load cart from localStorage
+      const cart = JSON.parse(localStorage.getItem('cloudBeautyCart')) || [];
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartSummary = document.getElementById('cart-summary');
+      
+      // Display cart items or empty cart message
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div class="empty-cart">
+            <i class="fas fa-shopping-bag"></i>
+            <h3>Your cart is empty</h3>
+            <p>Looks like you haven't added any products to your cart yet.</p>
+            <a href="shop.html" class="btn">Continue Shopping</a>
+          </div>
+        `;
+        cartSummary.style.display = 'none';
+      } else {
+        // Display cart items
+        let cartHTML = '';
+        let subtotal = 0;
+        
+        cart.forEach((item, index) => {
+          // Calculate item total
+          const itemPrice = parseFloat(item.price.replace('$', ''));
+          const itemTotal = itemPrice * item.quantity;
+          subtotal += itemTotal;
+          
+          cartHTML += `
+            <div class="cart-item" data-index="${index}">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="item-details">
+                <h3>${item.name}</h3>
+                <p>Price: ${item.price}</p>
+                <p>Shade: <span class="item-shade" style="background-color: ${item.shade};"></span></p>
+              </div>
+              <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity-display">${item.quantity}</span>
+                <button class="quantity-btn plus">+</button>
+              </div>
+              <p class="item-total">$${itemTotal.toFixed(2)}</p>
+              <button class="remove-btn">Remove</button>
+            </div>
+          `;
+        });
+        
+        cartItemsContainer.innerHTML = cartHTML;
+        
+        // Display summary
+        cartSummary.innerHTML = `
+          <h3>Order Summary</h3>
+          <p>Subtotal: $${subtotal.toFixed(2)}</p>
+          <p>Shipping: $5.00</p>
+          <p>Tax: $${(subtotal * 0.08).toFixed(2)}</p>
+          <h3>Total: $${(subtotal + 5 + subtotal * 0.08).toFixed(2)}</h3>
+          <button class="checkout-btn">Proceed to Checkout</button>
+        `;
+        
+        // Add event listeners to quantity buttons
+        const minusButtons = document.querySelectorAll('.minus');
+        const plusButtons = document.querySelectorAll('.plus');
+        const removeButtons = document.querySelectorAll('.remove-btn');
+        
+        minusButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.closest('.cart-item').dataset.index);
+            if (cart[index].quantity > 1) {
+              cart[index].quantity -= 1;
+              updateCart();
+            }
+          });
+        });
+        
+        plusButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.closest('.cart-item').dataset.index);
+            cart[index].quantity += 1;
+            updateCart();
+          });
+        });
+        
+        removeButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.closest('.cart-item').dataset.index);
+            cart.splice(index, 1);
+            updateCart();
+          });
+        });
+        
+        // Checkout button
+        document.querySelector('.checkout-btn').addEventListener('click', function() {
+          alert('Thank you for your purchase! This is where the checkout process would begin.');
+          // Here you would normally redirect to a checkout page
+        });
+      }
+      
+      // Function to update cart in localStorage and refresh the page
+      function updateCart() {
+        localStorage.setItem('cloudBeautyCart', JSON.stringify(cart));
+        location.reload();
+      }
+      
+      // Update cart count in the header
+      function updateCartCount() {
+        const cartIcon = document.querySelector('.cart-icon');
+        if (cartIcon) {
+          const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+          
+          // Create or update cart count element
+          let cartCount = document.querySelector('.cart-count');
+          if (!cartCount) {
+            cartCount = document.createElement('span');
+            cartCount.className = 'cart-count';
+            cartIcon.appendChild(cartCount);
+          }
+          
+          cartCount.textContent = totalItems;
+          
+          // Hide count if zero
+          if (totalItems === 0) {
+            cartCount.style.display = 'none';
+          } else {
+            cartCount.style.display = 'inline-block';
+          }
+        }
+      }
+      
+      updateCartCount();
+    });
+  </script>
+</body>
+</html>

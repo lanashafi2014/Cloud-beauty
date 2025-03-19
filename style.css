@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Beauty Shop</title>
+  <style>
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f2f7ff; /* Light blue background */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background-color: #a3c7e9; /* Baby blue header */
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  display: flex;           /* Enables flexbox */
+  justify-content: center; /* Centers the content horizontally */
+  align-items: center;     /* Aligns the items vertically */
+}
+
+header .logo {
+  display: flex;           /* Aligns logo and text horizontally */
+  align-items: center;     /* Vertically center the items */
+}
+
+header .logo img {
+  width: 50px;             /* Adjust the size of the logo */
+  height: 50px;
+  border-radius: 50%;      /* Makes the logo circular */
+  object-fit: cover;       /* Ensures the image fits within the circle */
+  margin-right: 10px;      /* Space between the logo and the website name */
+  animation: spin 5s linear infinite; /* Adds spinning animation */
+}
+
+/* Spinning animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start at 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Complete a full rotation */
+  }
+}
+
+header .logo h1 {
+  font-size: 2rem;         /* Adjusts the size of the website name */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Welcome Banner - NEW SECTION */
+.welcome-banner {
+  background-color: #e3f0ff; /* Light blue background matching the theme */
+  padding: 40px 20px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.welcome-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-content h2 {
+  color: #5c85d6; /* Matching blue theme */
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+.welcome-content p {
+  color: #555;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Hero Section */
+.hero {
+  background-image: url('images/hero-bg.jpg'); /* Add your own background image */
+  background-size: cover;
+  background-position: center;
+  height: 600px;
+  position: relative;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay for contrast */
+  z-index: 1;
+}
+
+.hero-content {
+  z-index: 2;
+  color: white;
+  padding: 20px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Shop Section */
+.shop {
+  padding: 40px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product {
+  width: 30%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out; /* Smooth transform on hover */
+}
+
+.product:hover {
+  transform: translateY(-10px); /* Slight hover effect to lift the card */
+}
+
+.product img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.product h3 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.product p {
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* Shade Options */
+.shade-options {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.shade {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.shade:hover {
+  border: 2px solid #333;
+}
+
+.btn {
+  background-color: #c2a7e3; /* Light purple button */
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: #a689d1;
+}
+
+/* Contact Page Styling */
+.contact {
+  background: #ffffff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2.5rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.contact-details,
+.business-hours {
+  margin-top: 25px;
+  background: #e3f0ff; /* Soft light blue background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-details ul li {
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.contact-details ul li a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.contact-details ul li a:hover {
+  text-decoration: underline;
+}
+
+.business-hours p {
+  font-size: 1.1rem;
+  margin: 5px 0;
+  color: #333;
+}
+
+/* Footer */
+footer {
+  background-color: #a3c7e9; /* Baby blue footer */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+/* Cart Styling */
+.cart-icon {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #c2a7e3; /* Matches your button color */
+  color: white;
+  font-size: 12px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Selected shade styling */
+.shade.selected {
+  border: 3px solid #333 !important;
+  transform: scale(1.1);
+}
+
+/* Cart page styling */
+.cart-page {
+  padding: 40px 20px;
+  background-color: #ffffff;
+  min-height: 60vh;
+}
+
+.cart-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-shade {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-btn {
+  background-color: #e3f0ff;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.quantity-display {
+  padding: 0 15px;
+  font-weight: bold;
+}
+
+.remove-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.cart-summary {
+  margin-top: 40px;
+  background-color: #e3f0ff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.checkout-btn {
+  background-color: #c2a7e3;
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.checkout-btn:hover {
+  background-color: #a689d1;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 40px;
+}
+
+.empty-cart i {
+  font-size: 60px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Add to cart confirmation message */
+.add-confirmation {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #5c85d6;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Beauty Tips Page Styling */
+.beauty-tips {
+  background-color: #ffffff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.tips-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tip-item {
+  background-color: #e3f0ff;
+  padding: 30px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tip-item h3 {
+  color: #5c85d6;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  margin-bottom: 20px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.tip-item p {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Quick Tips Section */
+.quick-tips {
+  background-color: #f2f7ff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.quick-tips h2 {
+  color: #5c85d6;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.tips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.quick-tip {
+  width: 22%;
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.quick-tip:hover {
+  transform: translateY(-5px);
+}
+
+.quick-tip i {
+  font-size: 2rem;
+  color: #c2a7e3;
+  margin-bottom: 15px;
+}
+
+.quick-tip h4 {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.quick-tip p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product {
+    width: 80%;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .contact h2 {
+    font-size: 2rem;
+  }
+
+  .contact p {
+    font-size: 1rem;
+  }
+
+  .contact-details ul li {
+    font-size: 1rem;
+  }
+  
+  .welcome-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-content p {
+    font-size: 1rem;
+  }
+  
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cart-item img {
+    margin-bottom: 10px;
+  }
+  
+  .quantity-controls {
+    margin: 10px 0;
+  }
+  
+  .remove-btn {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  
+  .quick-tip {
+    width: 45%;
+  }
+  
+  .tip-item h3 {
+    font-size: 1.5rem;
+  }
+  
+  .tip-item p {
+    font-size: 1rem;
+  }
+  
+  /* Continue the responsive styles for other elements */
+  .quick-tips h2 {
+    font-size: 1.7rem;
+  }
+  
+  nav ul {
+    flex-direction: column;
+  }
+  
+  nav ul li {
+    margin: 10px 0;
+  }
+}
+
+/* If there are any additional media queries for smaller screens */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .quick-tip {
+    width: 90%;
+  }
+  
+  .product {
+    width: 95%;
+  }
+  
+  .shade {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+  
+  header .logo h1 {
+    font-size: 1.5rem;
+  }
+  
+  header .logo img {
+    width: 40px;
+    height: 40px;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- Your content goes here -->
+  <header>
+    <div class="logo">
+      <img src="images/logo.png" alt="Beauty Shop Logo">
+      <h1>Beauty Shop</h1>
+    </div>
+  </header>
+  
+  <!-- Page content would go here -->
+  
+  <footer>
+    <p>&copy; 2025 Beauty Shop. All rights reserved.</p>
+  </footer>
+</body>
+</html>
